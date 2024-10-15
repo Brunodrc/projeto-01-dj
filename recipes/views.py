@@ -13,6 +13,7 @@ def home(request):
 
 def recipes(request, id):
     context = {
-        'recipe': make_recipe()
+        'recipe': make_recipe(),
+        'is_datail_page': True,
     }
     return render(request, 'recipes/pages/recipe-view.html', context)
