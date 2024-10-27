@@ -1,6 +1,6 @@
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
-        <a href="{% url 'recipe_detail' recipe.id %}">
+        <a href="{% url 'recipes:recipe_detail' recipe.id %}">
             <img src="{{recipe.cover.url}}" alt="temporario">
         </a>
     </div>
@@ -11,20 +11,28 @@
     <!-- fim titulo -->
     <!-- autor, data e categoria -->
     <div class="recipe-author">
-        <span class="recipe-author-item">
-            <i class="fas fa-user"></i>
-            {{recipe.author.first_name}} {{recipe.author.last_name}}
-        </span>
+        {% if recipe.author is not None %}
+            <span class="recipe-author-item">
+                <i class="fas fa-user"></i>
+                {% if recipe.author.first_name %}
+                    {{recipe.author.first_name}} {{recipe.author.last_name}}
+                {% else %}
+                    {{recipe.author.username}}
+                {% endif %}
+            </span>
+        {% endif %}
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i>
             {{recipe.created_at|date:"d/m/Y"}} às {{recipe.created_at|date:"H:i"}}
         </span>
-        <span class="recipe-author-item">
-            <a href="/recipes/category/cafe-da-manha/">
-                <i class="fas fa-layer-group"></i>
-                <span>{{recipe.categoy.name}}</span>
-            </a>
-        </span>
+        {% if recipe.category is not None %}
+            <span class="recipe-author-item">
+                <a href="{% url 'recipes:category' recipe.category.id %}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>{{recipe.category.name}}</span>
+                </a>
+            </span>
+        {% endif %}
     </div>
     <!-- fim autor, data e categoria -->
     <!-- conteudo -->
@@ -51,7 +59,7 @@
     {% if is_datail_page is not True %}
     <!-- footer do card -->
     <footer class="recipe-footer">
-        <a class="recipe-read-more button button-dark button-full-width" href="{% url 'recipe_detail' recipe.id %}">
+        <a class="recipe-read-more button button-dark button-full-width" href="{% url 'recipes:recipe_detail' recipe.id %}">
             <i class="fas fa-eye"></i>
             <span>ver mais...</span>
         </a>
@@ -61,7 +69,11 @@
     <!--se for pagina de detalhes exibe o passo a passo  -->
     {% if is_datail_page is True  %}
         <div class="preparation-steps">
-            {{recipe.preparation_steps|linebreaksbr}}
+            {% if recipe.preparation_steps_is_html is True %}
+                {{recipe.preparation_steps|safe}}
+            {% else %}
+                {{recipe.preparation_steps|linebreaksbr}}
+            {% endif %}
         </div>
     {% endif %}
     <!--fim passo a passo  -->
