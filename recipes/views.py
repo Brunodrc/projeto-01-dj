@@ -45,3 +45,7 @@ def recipes(request, id):
         'is_datail_page': True,
     }
     return render(request, 'recipes/pages/recipe-view.html', context)
+
+
+def search(request):
+    ...

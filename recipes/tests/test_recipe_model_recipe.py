@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from .test_recipe_base import RecipeTestBase, Recipe
 from parameterized import parameterized
+from django.utils.text import slugify
+import itertools
 
 
 class RecipeModelTest(RecipeTestBase):
@@ -25,7 +27,7 @@ class RecipeModelTest(RecipeTestBase):
             author=self.make_author(username_a='testusername'),
             title='titulo da recipe',
             description="descrição da receita",
-            slug='titulo-da-recipe',
+            slug=unique_slug(Recipe, 'titulo'),
             preparation_time=10,
             preparation_time_unit='Minutos',
             servings=5,
@@ -55,6 +57,14 @@ class RecipeModelTest(RecipeTestBase):
         self.recipe.save()
         self.assertEqual(str(self.recipe), 'Testing representation')
 
+
+def unique_slug(model, title):
+    slug = slugify(title)
+    base_slug = slug
+    for i in itertools.count(1):
+        if not model.objects.filter(slug=slug).exists():
+            return slug
+        slug = f"{base_slug}-{i}"
 
 # def test_recipe_title_raise_error_if_title_more_than_65_char(self):
     #     self.recipe.title = 'B' * 66
