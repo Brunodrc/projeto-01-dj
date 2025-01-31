@@ -20,6 +20,12 @@ class RecipeURLTest(TestCase):
             'recipes:recipe_detail', kwargs={'id': 1})
         self.assertEqual(recipe_recipe_detail_url, '/recipes/1/')
 
+    """  criando uma url a partir do TDD - 
+        primeiro criase o teste para falhar
+        segundo corrige o erro do teste
+        terceiro refatora o código 
+    """
+
     def test_recipe_search_url_is_correct(self):
         url = reverse('recipes:search')
         self.assertEqual(url, '/recipes/search')
