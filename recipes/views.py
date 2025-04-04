@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Recipe
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # from .utils.recipes.factory_recipe import make_recipe
 # functions based views
@@ -10,8 +11,12 @@ from django.db.models import Q
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('created_at')
 
+    current_page = request.GET.get('page', 1)
+    paginator = Paginator(recipes, 9)
+    page_obj = paginator.get_page(current_page)
+
     context = {
-        'recipes': recipes,
+        'recipes': page_obj,
     }
     return render(request, 'recipes/pages/home.html', context)
 
