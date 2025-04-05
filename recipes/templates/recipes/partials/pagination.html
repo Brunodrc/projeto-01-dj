@@ -1,3 +1,17 @@
-<div class="container pagination">
-    paginação
-</div>
+{% if recipes.has_other_pages %}
+    <div class="main-content container pagination">
+        <div class="pagination-content">
+            {% if patinagion_range.first_page_out_of_range %}
+                <a class='page-link page-item' href="?page=1">1</a>
+                <span class="page-item">...</span>
+            {% endif %}
+            {% for page in patinagion_range.pagination  %}
+            <a class="page-link page-item" href="?page={{page}}">{{page}}</a>
+            {% endfor %}
+            {% if patinagion_range.last_page_out_of_range %}
+                <span class="page-item">...</span>
+                <a class='page-link page-item' href="?page={{patinagion_range.total_pages}}">{{patinagion_range.total_pages}}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

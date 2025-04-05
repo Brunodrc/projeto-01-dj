@@ -3,6 +3,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Recipe
 from django.db.models import Q
 from django.core.paginator import Paginator
+from .utils.pagination import make_pagination_range
 
 # from .utils.recipes.factory_recipe import make_recipe
 # functions based views
@@ -11,12 +12,23 @@ from django.core.paginator import Paginator
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('created_at')
 
-    current_page = request.GET.get('page', 1)
+    try:
+        current_page = int(request.GET.get('page', 1))
+    except ValueError:
+        current_page = 1
+
     paginator = Paginator(recipes, 9)
     page_obj = paginator.get_page(current_page)
 
+    patinagion_range = make_pagination_range(
+        paginator.page_range,
+        4,
+        current_page
+    )
+
     context = {
         'recipes': page_obj,
+        'patinagion_range': patinagion_range
     }
     return render(request, 'recipes/pages/home.html', context)
 
