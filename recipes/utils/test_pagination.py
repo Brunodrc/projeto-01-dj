@@ -1,5 +1,7 @@
 from unittest import TestCase
-from utils.test_pagination import make_pagination_range
+from .pagination import make_pagination_range
+from ..tests.test_recipe_base import RecipeTestBase
+from django.urls import response
 
 
 class PaginationTest(TestCase):
@@ -52,3 +54,17 @@ class PaginationTest(TestCase):
             current_page=2,
         )['pagination']
         self.assertEqual([1, 2, 3, 4], pagination)
+
+    # def test_show_number_correct_recipe_per_page(self):
+    #     total_recipes = []
+
+    #     for x in range(0, 15):
+    #         x = RecipeTestBase.make_recipe(title=f'receita-teste{str(x)}',
+    #                                        slug=str(x),
+    #                                        author_data={'username_a': f'{x}'})
+    #         total_recipes.append(x.title)
+
+    #     show_total_recipes_in_page = len(
+    #         response.context['recipes'].object_list)
+    #     print(len(total_recipes))
+    #     self.assertEqual(show_total_recipes_in_page, 10)
