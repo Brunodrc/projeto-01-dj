@@ -4,15 +4,18 @@ from .models import Recipe
 from django.db.models import Q
 
 from .utils.pagination import make_pagination
+import os
 
 # from .utils.recipes.factory_recipe import make_recipe
 # functions based views
+
+PER_PAGE = os.environ.get('PER_PAGE')
 
 
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('created_at')
 
-    page_obj, patinagion_range = make_pagination(request, recipes, 9)
+    page_obj, patinagion_range = make_pagination(request, recipes, PER_PAGE)
 
     context = {
         'recipes': page_obj,
@@ -32,7 +35,7 @@ def category(request, id_category):
                               is_published=True).order_by('created_at')
     )
 
-    page_obj, patinagion_range = make_pagination(request, recipes, 9)
+    page_obj, patinagion_range = make_pagination(request, recipes, PER_PAGE)
 
     context = {
         'recipes': page_obj,
@@ -70,7 +73,7 @@ def search(request):
         is_published=True,
     ).order_by('-id')
 
-    page_obj, patinagion_range = make_pagination(request, recipes, 9)
+    page_obj, patinagion_range = make_pagination(request, recipes, PER_PAGE)
 
     return render(request, 'recipes/pages/search.html', {
         'page_title': f'Search for "{search_term}" |',

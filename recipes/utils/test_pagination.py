@@ -61,7 +61,7 @@ class PaginationTest(TestCase):
     #     for x in range(0, 15):
     #         x = RecipeTestBase.make_recipe(title=f'receita-teste{str(x)}',
     #                                        slug=str(x),
-    #                                        author_data={'username_a': f'{x}'})
+    #                                        author_data={'username_a': str(x))
     #         total_recipes.append(x.title)
 
     #     show_total_recipes_in_page = len(
