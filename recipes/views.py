@@ -9,7 +9,7 @@ import os
 # from .utils.recipes.factory_recipe import make_recipe
 # functions based views
 
-PER_PAGE = os.environ.get('PER_PAGE')
+PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def home(request):
