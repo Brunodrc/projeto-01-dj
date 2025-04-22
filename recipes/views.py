@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Recipe
 from django.db.models import Q
-from django.contrib import messages
+# from django.contrib import messages
 
 from .utils.pagination import make_pagination
 import os
@@ -15,11 +15,6 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('created_at')
-
-    messages.success(request, "mensagem de sucesso!!!")
-    messages.error(request, "mensagem de ERRROR!!!")
-    messages.info(request, "mensagem de INFO!!!")
-    messages.warning(request, "mensagem de WARNING!!!")
 
     page_obj, patinagion_range = make_pagination(request, recipes, PER_PAGE)
 
