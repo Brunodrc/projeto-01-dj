@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 # função para facilitar as sobrescritas dos padrões do django
@@ -37,3 +38,20 @@ class RegisterForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
+
+# o método clean_nome_do_campo,
+# ex: clean_first_name, clean_password etc é específico de um campo
+# apos a validação individual de cada campo,
+# usa-se o método clean para validar vários campos
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password != password2:
+            raise ValidationError({
+                'password': 'Password and password2 must be equal.',
+                'password2': 'Password and password2 must be equal.',
+            })

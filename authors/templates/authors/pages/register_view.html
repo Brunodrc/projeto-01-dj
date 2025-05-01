@@ -23,6 +23,13 @@
                         {{field.errors}}
                     </div>
                 {% endfor %}
+                {% if form.errors %}
+                    <div class="full-width-message messages-container">
+                        <div class="message message-error ">
+                            There are erros in the form, please fix them and send again.
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div class="form-group button-register">
                     <button type="submit">Cadastrar</button>
