@@ -1,13 +1,13 @@
 {% extends "global/base.html" %}
 
-{% block title %}Cadastre-se | {% endblock title %}
+{% block title %}Cadastre-se |  {% endblock title %}
 
 {% block content %}
-    <div class="main-content center container">
-        <h1>Cadastre-se</h1>
+    <div class="register-container container">
+        <h1>Cadastre-se </h1>
     </div>
-    <div class="main-content container">
-        <form action="" method="post">
+    <div class="register-container">
+        <form action="{% url 'authors:create' %}" method="post">
             {% csrf_token %}
             <div class="form-content form-content-grid">
                 
@@ -24,11 +24,11 @@
                     </div>
                 {% endfor %}
 
+                <div class="form-group button-register">
+                    <button type="submit">Cadastrar</button>
+                </div>
+            
             </div>
-            <div class="form-group">
-                <button type="submit">Cadastrar</button>
-            </div>
-
         </form>
     </div>
 {% endblock content %}
