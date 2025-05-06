@@ -6,6 +6,7 @@
     <div class="register-container container">
         <h1>Cadastre-se </h1>
     </div>
+    {% include "recipes/partials/messages.html" %}
     <div class="register-container">
         <form action="{% url 'authors:create' %}" method="post">
             {% csrf_token %}
